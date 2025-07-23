@@ -8,4 +8,4 @@ dist/
 
 .env
 
-Back-end/database.js
+backend/database.js
