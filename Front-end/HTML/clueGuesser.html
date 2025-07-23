@@ -1,0 +1,124 @@
+<html>
+
+<head>
+	<title>Clue Capture Game</title>
+	<link rel="stylesheet" href="../CSS/boardGameStyle.css" />
+	<link rel="stylesheet" href="https://use.typekit.net/jfe7dsa.css" />
+</head>
+
+<body data-mode="db">
+	<div class="header">
+		<button id="backButton">
+			<span class="text">Start screen</span>
+			<span class="arrow"><br />←</span>
+		</button>
+		<h1>Clue Capture</h1>
+	</div>
+	<div class="top-screen">
+		<div class="image-container-left">
+			<img src="../Images/StickMan.png" alt="PLAYER ONE" />
+			<p id="playerName" class="image-caption-left"></p>
+			<p id="scoreCounter" class="score-caption-left">Score: 0</p>
+		</div>
+		<div class="image-container-right">
+			<img src="../Images/Clue Captain no background.png" alt="CLUE CAPTAIN" />
+			<p class="image-caption-right">Clue Captain</p>
+			<div class="speech-bubble">
+				<span class="cloud-text">Please choose the cards connected to the hint and press 'Submit Cards'!</span>
+			</div>
+		</div>
+	</div>
+
+	<div class="game-board" id="gameBoard"></div>
+	<div id="showHintContainer">
+		<div id="hintWrapper"></div>
+		<span id="hintLabel">Hint:</label>
+			<span id="hintText">This is the hint text.</span>
+		<label>Selectable cards: 
+			<span id="maxSelectedCards"> </span>
+		</label>
+	</div>
+
+	<script>
+		const name = localStorage.getItem("playerName") || "Player one";
+		const playerNameElement = document.getElementById("playerName");
+		if (playerNameElement) {
+			playerNameElement.textContent = name;
+		}
+		//Difficult to put in TS so for now in HTML
+
+		// Initialize score
+		let score = 0;
+		const scoreCounterElement = document.getElementById("scoreCounter");
+		function updateScore(newScore) {
+			score = newScore;
+			if (scoreCounterElement) {
+				scoreCounterElement.textContent = `Score: ${score}`;
+			}
+		}
+	</script>
+
+	<div class="bottom-screen">
+		<button id="resetButton">Reset Game</button>
+		<button id="rulesButton">Rules</button>
+		<button id="hintButton">
+			Give<br />Me My <br />
+			Hint!
+		</button>
+		<button id="submitCardsButton" type="submit">Submit Cards</button>
+	</div>
+
+	<div id="rulesModal" class="modal">
+		<div class="modal-content">
+			<span class="close" , id="close">&times;</span>
+			<h2>Game Rules</h2>
+			<p>Here are the rules of Clue Capture!</p>
+			<ul>
+				<li><strong>Aantal spelers:</strong> 1 speler
+					<br><strong>Benodigdheden: </strong>Een computer of apparaat met toegang tot de
+					ClueCapture-webapplicatie
+				</li>
+				<li><strong> Doel van het spel</strong>
+
+					<br>Het doel van ClueCapture is om creatieve hints te bedenken en plaatjes correct aan elkaar te
+					koppelen. Door slim te spelen, verzamel je punten en verbeter je je persoonlijke highscore.
+				</li>
+				<li><strong>Opzet van het spel</strong>
+					<br>1. Het speelveld bestaat uit een 4x4-rooster van 16 plaatjes.
+					<br>2. Je speelt afwisselend in twee rollen: Clue Maker en Clue Guesser.
+					<br>3. Er is een tekstveld om hints in te voeren en een reset-knop om het spel opnieuw te starten.
+				</li>
+				<li><strong>Spelverloop</strong>
+					<br><u>Rol: Clue Maker</u>
+					<br>• Als Clue Maker bedenk je een hint die verband houdt met 2 tot 4 plaatjes op het speelveld.
+					<br>• Voer de hint in het tekstveld in.
+					<br>• Klik op de plaatjes die bij jouw hint passen om ze te selecteren.
+					<br>• Bevestig je keuze.
+
+					<br><u>Rol: Clue Guesser</u>
+					<br>• Je wisselt automatisch van rol en word de Clue Guesser.
+					<br>• Bekijk de hint die een andere speler heeft ingevuld.
+					<br>• Probeer door op de plaatjes te klikken de juiste plaatjes te kiezen die bij de hint horen.
+					<br>• Voor elk correct geraden plaatje verdien je 1 punt.
+					<br>• Als je alle geselecteerde plaatjes correct koppelt, verdien je extra punten en kun je direct
+					doorgaan naar de volgende ronde.
+				</li>
+				<li><strong>Puntentelling</strong>
+					<br>• Alle geselecteerde plaatjes correct geraden: +3 punten
+					<br>• Een deel van de plaatjes correct geraden: +1 punt
+					<br>• Geen correct geraden plaatjes: 0 punten
+					<br> Let op: Het aantal punten per ronde is afhankelijk van je prestaties als Clue Guesser.
+				</li>
+				<li><strong>Ronde afronden</strong>
+					<br>• Na elke ronde wissel je automatisch van rol: van Clue Maker naar Clue Guesser of andersom.
+					<br>• Het spel gaat door totdat je ervoor kiest te stoppen.
+				</li>
+			</ul>
+		</div>
+	</div>
+
+	<script type="module" src="../dist/gameSetup.js"></script>
+	<script type="module" src="../dist/imageLoaderFromDB.js"></script>
+</body>
+
+</html>

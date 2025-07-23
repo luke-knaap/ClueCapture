@@ -1,0 +1,524 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  max-width: 100%;
+  max-height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: "owners", sans-serif;
+  font-weight: 200;
+  font-style: normal;
+  background-color: #03363d;
+  color: white;
+}
+
+h1 {
+  font-weight: 500;
+  font-size: 60px;
+}
+.header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin-top: 10px;
+}
+
+.top-screen {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  justify-content: space-between;
+  padding: 20px;
+  margin-top: -40px;
+}
+
+.game-board {
+  display: grid;
+  grid-template-columns: repeat(4, 125px);
+  gap: 10px;
+  margin-top: -160px;
+}
+
+.card {
+  width: 120px;
+  height: 120px;
+  background-color: white;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border-radius: 8px;
+  border: white 2px solid;
+  margin: 10px;
+  box-sizing: border-box;
+  overflow: hidden;
+  perspective: 1000px;
+  transition: transform 0.6s;
+  position: relative;
+}
+
+.card img {
+  position: absolute;
+  width: 120px;
+  height: 120px;
+  border-radius: 8px;
+  z-index: 8;
+}
+
+.card:hover {
+  background-color: #028090;
+}
+
+.card.clicked {
+  outline: 5px solid #e6c200; /* Adjust the color to your preference */
+}
+
+.card.correct {
+  outline: 5px solid green; /*Adjust the colour to your preference */
+}
+
+.card.incorrect {
+  outline: 5px solid red; /*Adjust the colour to your preference */
+}
+
+.card.clicked img {
+  opacity: 0.5;
+}
+
+.card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.card-front {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  background: white;
+}
+.text-box {
+  position: absolute;
+  top: 80%;
+  width: 100%;
+  padding: 5px;
+  text-align: center;
+  font-size: 14px;
+  color: #374648;
+  display: none;
+  z-index: 10;
+}
+
+.animatingCard {
+  position: absolute;
+  top: 40%;
+  left: 45%;
+  z-index: 10;
+  animation: spinAndGrow 1s linear;
+}
+
+.card.big {
+  height: 150px;
+  z-index: 10;
+  position: absolute;
+  top: 45%;
+  left: 45%;
+  transform: translate(0%, 20%) scale(4);
+  cursor: default;
+}
+
+.text-box.see {
+  display: block;
+}
+
+.info-button {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  min-width: 25px;
+  min-height: 25px;
+  background-color: white;
+  color: black;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.info-button:hover {
+  background-color: #d1d1d1;
+}
+.hidden {
+  display: none;
+}
+
+.image-container-left,
+.image-container-right {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center vertically */
+  width: 250px; /* Pas de breedte aan naar wens */
+  height: 175px; /* Pas de hoogte aan naar wens */
+}
+
+.image-container-left img,
+.image-container-right img {
+  width: 250px; /* Match the width of the container */
+  height: 175px;
+  object-fit: contain;
+  background-color: #9ab9c1;
+  border-radius: 20px;
+  border: white 2px solid;
+}
+
+.image-caption-left,
+.image-caption-right {
+  text-align: center;
+  color: white;
+  font-size: 24px;
+  font-weight: bold;
+  margin-top: 10px; /* Adjust the space between the image and the text */
+}
+
+/* Text inside the cloud */
+.cloud-text {
+  font-size: 16px;
+  font-weight: bold;
+  color: #03363d;
+}
+
+.score-caption-left {
+  text-align: center;
+  color: white;
+  font-size: 20px; /* Adjust font size for visibility */
+  font-weight: bold;
+}
+
+#showHintContainer {
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.bottom-screen {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  position: fixed;
+  bottom: 0;
+}
+
+#hintForm {
+  position: absolute;
+  right: 130px;
+  bottom: 20px;
+  /* margin-right: -100px; */
+}
+
+#resetButton,
+#rulesButton,
+#submitHintButton,
+#submitCardsButton,
+#hintButton,
+#backButton {
+  background-color: #9ab9c1; /* Bright red background */
+  color: #03363d; /* White text */
+  width: 100px;
+  min-width: 100px;
+  height: 100px;
+  font-size: 18px; /* Slightly larger font */
+  font-weight: bold; /* Make the text bold */
+  border: 2px solid #03363d; /* Darker red border */
+  border-radius: 10px; /* Rounded corners */
+  align-items: center; /* Vertically center text */
+  justify-content: center; /* Horizontally center text */
+  cursor: pointer; /* Pointer cursor on hover */
+  transition: all 0.3s ease; /* Smooth transition effect */
+  transform-origin: center;
+}
+
+#resetButton:hover,
+#rulesButton:hover,
+#submitHintButton:hover,
+#submitCardsButton:hover,
+#hintButton:hover,
+#backButton:hover {
+  background-color: #03363d; /* Lighter red on hover */
+  border-color: white; /* Slightly lighter border */
+  color: white;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Optional shadow effect */
+}
+
+.clueGroup {
+  display: flex;
+  align-items: center;
+  margin: 10px;
+}
+
+#submitHintButton {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  /* flex-direction: row;
+	margin-right: -100px; */
+}
+
+#submitCardsButton {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+}
+
+#hintButton {
+  position: fixed;
+  right: 46%;
+  bottom: 20px;
+}
+
+#backButton {
+  margin-right: 20px;
+}
+
+.text {
+  margin-right: 10px;
+}
+
+.arrow {
+  font-size: 20px;
+  position: relative;
+  bottom: 2px;
+}
+
+#inputField {
+  width: 250px; /* Set the width of the text field */
+  height: 40px; /* Set the height */
+  border: 2px solid #03363d; /* Border color */
+  border-radius: 8px; /* Rounded corners */
+  padding: 0 10px; /* Padding inside the text field */
+  font-size: 16px; /* Font size of the text */
+  background-color: #f0f0f0; /* Light background */
+  color: #03363d; /* Text color */
+  transition: all 0.3s ease; /* Smooth transition effect */
+}
+
+#inputLabel,
+#hintLabel {
+  font-size: 24px;
+  font-weight: bold;
+  color: white;
+}
+#inputLabel {
+  width: 130px;
+  margin-right: 10px; /* Add space between label and input field */
+}
+
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed;
+  z-index: 1;
+  top: 50px;
+  bottom: 200px;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  background-color: rgba(3, 54, 61, 0.5); /* Transparent black background */
+  overflow: auto; /* Prevents content from overflowing the modal */
+}
+
+/* Modal content */
+.modal-content {
+  background-color: #fff;
+  margin: 15% auto; /* Centers the modal */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 60%; /* You can adjust the width */
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Close button */
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.modal-content h2 {
+  font-size: 24px;
+  color: #03363d; /* Set a color for the heading */
+  font-weight: bold;
+  text-align: center; /* Center align the heading */
+  margin-bottom: 20px; /* Add space below the heading */
+}
+
+/* List of rules */
+.modal-content ul {
+  list-style-type: none; /* Remove default bullets */
+  padding-left: 0;
+}
+
+.modal-content li {
+  font-family: "owners-wide", sans-serif;
+  font-weight: 100;
+  font-size: 12px; /* Slightly larger text for rules */
+  color: #333; /* Dark text color for readability */
+  margin-bottom: 5px; /* Space between each rule */
+}
+
+button:disabled:hover {
+  background-color: #007bff;
+  cursor: default;
+}
+
+#resetButton.loading,
+#hintButton.loading {
+  background-color: #b9d5e9; /* Lichtere kleur tijdens het laden */
+  color: #000000;
+  cursor: not-allowed; /* Knop is niet klikbaar */
+  pointer-events: none;
+}
+
+#resetButton.loading::after,
+#hintButton.loading::after {
+  content: "";
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 4px solid transparent;
+  border-top: 4px solid #03363d;
+  border-radius: 50%;
+  margin-left: 10px;
+}
+
+#rulesButton {
+  position: fixed;
+  left: 140px;
+  bottom: 20px;
+}
+
+#resetButton {
+  position: fixed;
+  left: 20px;
+  bottom: 20px;
+}
+
+/* Dropdown styling */
+#numberOfCards {
+  background-color: #9ab9c1;
+  color: #03363d;
+  height: 35px;
+  width: 250px;
+  font-size: 24px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+#numberOfCards:focus {
+  outline: none;
+  font-size: 24px;
+  color: #03363d;
+  background-color: #03363d; /* Lighter red on hover */
+  border-color: white; /* Slightly lighter border */
+  color: white;
+  transform: scale(1.1); /* Slightly increase size */
+}
+
+#numberOfCardsLabel {
+  width: 130px;
+  display: block;
+  margin-right: 10px;
+  font-weight: bold;
+  font-size: 24px;
+  color: white;
+}
+
+.speech-bubble {
+  background-color: #f0f0f0;
+  border-radius: 10px;
+  padding: 15px;
+  margin-left: -40px;
+  width: 200px;
+  height: 130px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transform: translateY(10px);
+}
+.speech-bubble::after {
+  content: "";
+  position: absolute;
+  top: -10px;
+  left: 15px;
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-bottom: 10px solid #f1f1f1;
+}
+
+#numberOfcards:focus {
+  outline: none;
+  border-color: #03363d;
+}
+
+@media (max-width: 1000px) {
+  .image-container-left img {
+    display: none;
+  }
+  .game-board {
+    margin-top: -150px;
+  }
+  .image-container-right img {
+    display: none;
+  }
+}
+
+@keyframes spinAndGrow {
+  0% {
+    transform: scale(1) rotate(0deg);
+  }
+  50% {
+    transform: scale(2) rotate(360deg);
+  }
+  100% {
+    transform: scale(4) rotate(720deg);
+  }
+}
+
+@keyframes expandHeight {
+  from {
+    max-height: 100px;
+  }
+  to {
+    max-height: 300px;
+  }
+}
+
+@keyframes collapseHeight {
+  from {
+    max-height: 300px;
+  }
+  to {
+    max-height: 100px;
+  }
+}
