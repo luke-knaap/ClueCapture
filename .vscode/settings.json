@@ -1,10 +1,12 @@
 {
   "files.exclude": {
     "**/node_modules": true,
-    "**/dist": true
+    "**/dist": true,
+    "**/client/src/vite-env.d.ts": true
   },
   "search.exclude": {
     "**/node_modules": true,
-    "**/dist": true
+    "**/dist": true,
+    "**/client/src/vite-env.d.ts": true
   }
 }

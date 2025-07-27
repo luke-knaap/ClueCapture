@@ -1,9 +1,8 @@
-import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { useState } from "react";
 
-function App() {
+function HomePage() {
   const [count, setCount] = useState(0);
-
   return (
     <>
       <div className="flex flex-col max-w-md m-auto gap-2">
@@ -15,4 +14,4 @@ function App() {
   );
 }
 
-export default App;
+export default HomePage;
