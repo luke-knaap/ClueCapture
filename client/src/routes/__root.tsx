@@ -1,7 +1,12 @@
-import { createRootRoute, Link, Outlet } from "@tanstack/react-router";
+import type { GameContext } from "@/hooks/useGameState";
+import { createRootRouteWithContext, Link, Outlet } from "@tanstack/react-router";
 // import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 
-export const Route = createRootRoute({
+type RouterContext = {
+  gameState: GameContext;
+};
+
+export const Route = createRootRouteWithContext<RouterContext>()({
   component: () => (
     <>
       <div>

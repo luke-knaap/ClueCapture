@@ -1,14 +1,28 @@
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
+import { InputWithLabel } from "@/components/custom/inputWithLabel";
+import { useGameState } from "@/hooks/useGameState";
+import { useNavigate } from "@tanstack/react-router";
+import { useEffect } from "react";
 
 function HomePage() {
-  const [count, setCount] = useState(0);
+  const navigate = useNavigate();
+  const { gameStarted, resetGame } = useGameState();
+  const handleStart = () => {
+    gameStarted();
+    navigate({ to: "/clueGuesser" });
+  };
+
+  useEffect(() => {
+    resetGame();
+  }, []);
+
   return (
     <>
-      <div className="flex flex-col max-w-md m-auto gap-2">
-        <Button onClick={() => setCount((count) => count + 1)}>Up</Button>
-        <Button onClick={() => setCount((count) => count - 1)}>Down</Button>
-        <p className="text-indigo-400 m-auto">{count}</p>
+      <div className="grid justify-center">
+        <InputWithLabel name="Username"></InputWithLabel>
+        <Button className="max-w-200 mt-10" onClick={handleStart}>
+          Start Game
+        </Button>
       </div>
     </>
   );

@@ -9,18 +9,13 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as ClueMakerRouteImport } from './routes/clueMaker'
-import { Route as ClueGuesserRouteImport } from './routes/clueGuesser'
+import { Route as GameRouteImport } from './routes/_game'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as GameClueMakerRouteImport } from './routes/_game/clueMaker'
+import { Route as GameClueGuesserRouteImport } from './routes/_game/clueGuesser'
 
-const ClueMakerRoute = ClueMakerRouteImport.update({
-  id: '/clueMaker',
-  path: '/clueMaker',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ClueGuesserRoute = ClueGuesserRouteImport.update({
-  id: '/clueGuesser',
-  path: '/clueGuesser',
+const GameRoute = GameRouteImport.update({
+  id: '/_game',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -28,51 +23,54 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const GameClueMakerRoute = GameClueMakerRouteImport.update({
+  id: '/clueMaker',
+  path: '/clueMaker',
+  getParentRoute: () => GameRoute,
+} as any)
+const GameClueGuesserRoute = GameClueGuesserRouteImport.update({
+  id: '/clueGuesser',
+  path: '/clueGuesser',
+  getParentRoute: () => GameRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/clueGuesser': typeof ClueGuesserRoute
-  '/clueMaker': typeof ClueMakerRoute
+  '/clueGuesser': typeof GameClueGuesserRoute
+  '/clueMaker': typeof GameClueMakerRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/clueGuesser': typeof ClueGuesserRoute
-  '/clueMaker': typeof ClueMakerRoute
+  '/clueGuesser': typeof GameClueGuesserRoute
+  '/clueMaker': typeof GameClueMakerRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/clueGuesser': typeof ClueGuesserRoute
-  '/clueMaker': typeof ClueMakerRoute
+  '/_game': typeof GameRouteWithChildren
+  '/_game/clueGuesser': typeof GameClueGuesserRoute
+  '/_game/clueMaker': typeof GameClueMakerRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths: '/' | '/clueGuesser' | '/clueMaker'
   fileRoutesByTo: FileRoutesByTo
   to: '/' | '/clueGuesser' | '/clueMaker'
-  id: '__root__' | '/' | '/clueGuesser' | '/clueMaker'
+  id: '__root__' | '/' | '/_game' | '/_game/clueGuesser' | '/_game/clueMaker'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  ClueGuesserRoute: typeof ClueGuesserRoute
-  ClueMakerRoute: typeof ClueMakerRoute
+  GameRoute: typeof GameRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/clueMaker': {
-      id: '/clueMaker'
-      path: '/clueMaker'
-      fullPath: '/clueMaker'
-      preLoaderRoute: typeof ClueMakerRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/clueGuesser': {
-      id: '/clueGuesser'
-      path: '/clueGuesser'
-      fullPath: '/clueGuesser'
-      preLoaderRoute: typeof ClueGuesserRouteImport
+    '/_game': {
+      id: '/_game'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof GameRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -82,13 +80,38 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_game/clueMaker': {
+      id: '/_game/clueMaker'
+      path: '/clueMaker'
+      fullPath: '/clueMaker'
+      preLoaderRoute: typeof GameClueMakerRouteImport
+      parentRoute: typeof GameRoute
+    }
+    '/_game/clueGuesser': {
+      id: '/_game/clueGuesser'
+      path: '/clueGuesser'
+      fullPath: '/clueGuesser'
+      preLoaderRoute: typeof GameClueGuesserRouteImport
+      parentRoute: typeof GameRoute
+    }
   }
 }
 
+interface GameRouteChildren {
+  GameClueGuesserRoute: typeof GameClueGuesserRoute
+  GameClueMakerRoute: typeof GameClueMakerRoute
+}
+
+const GameRouteChildren: GameRouteChildren = {
+  GameClueGuesserRoute: GameClueGuesserRoute,
+  GameClueMakerRoute: GameClueMakerRoute,
+}
+
+const GameRouteWithChildren = GameRoute._addFileChildren(GameRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  ClueGuesserRoute: ClueGuesserRoute,
-  ClueMakerRoute: ClueMakerRoute,
+  GameRoute: GameRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
