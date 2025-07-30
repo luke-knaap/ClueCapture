@@ -1,8 +1,11 @@
 import { Hono } from "hono";
+import { testconnection } from "./db";
+import museumRoute from "@/routes/metMueseumRoute";
+
 const app = new Hono();
 
-app.get("api/test", (c) => {
-  return c.json({ message: "test" });
-});
+await testconnection();
+
+app.route("/", museumRoute);
 
 export default app;
