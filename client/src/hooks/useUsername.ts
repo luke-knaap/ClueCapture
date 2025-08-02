@@ -1,5 +1,5 @@
-import { getCookie, setCookie } from "@/utils/cookies";
 import { useEffect, useState } from "react";
+import { getCookie, setCookie } from "@client/utils/cookies";
 
 export function useUsername() {
   const [username, setUsername] = useState("");

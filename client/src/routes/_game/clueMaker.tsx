@@ -1,4 +1,4 @@
-import ClueMakerPage from "@/pages/clueMakerPage";
+import ClueMakerPage from "@client/pages/clueMakerPage";
 import { createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/_game/clueMaker")({

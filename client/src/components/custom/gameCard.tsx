@@ -1,8 +1,12 @@
-import ClueCaptain from "@/assets/Clue Captain blue artboard.png";
 import { Button } from "../ui/button";
 import { Card, CardContent } from "../ui/card";
 
-export function GameCard() {
+type GameCardProps = {
+  image: string;
+  title: string;
+};
+
+export function GameCard({ image, title }: GameCardProps) {
   return (
     <Card className="relative p-0 m-5 h-40 w-40 overflow-hidden cursor-pointer">
       <Button
@@ -12,7 +16,7 @@ export function GameCard() {
         i
       </Button>
       <CardContent className="p-0 h-full">
-        <img src={ClueCaptain} alt="card" className="w-full h-full object-cover object-center" />
+        <img src={image} alt={title} className="w-full h-full object-cover object-center" />
       </CardContent>
     </Card>
   );

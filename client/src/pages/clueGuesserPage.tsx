@@ -1,11 +1,14 @@
-import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
-import { GameBoard } from "@/features/gameBoard";
-import { useUsername } from "@/hooks/useUsername";
 import { useNavigate } from "@tanstack/react-router";
+import { useState } from "react";
+import { InputWithLabel } from "@client/components/custom/inputWithLabel";
+import { Button } from "@client/components/ui/button";
+import { Label } from "@client/components/ui/label";
+import { GameBoard } from "@client/features/gameBoard";
+import { useUsername } from "@client/hooks/useUsername";
 
 function ClueGuesserPage() {
   const [username] = useUsername();
+  const [hint, setHint] = useState("");
   const navigate = useNavigate();
 
   return (
@@ -18,6 +21,14 @@ function ClueGuesserPage() {
         Terug naar <br /> hoofdmenu
       </Button>
       <GameBoard></GameBoard>
+      <div className="flex flex-col items-end gap-4">
+        <InputWithLabel
+          label="Hint:"
+          placeholder="Voer hier je hint in"
+          value={hint}
+          onChange={(val) => setHint(val.replace(/[^a-zA-Z]/g, ""))}
+        ></InputWithLabel>
+      </div>
     </div>
   );
 }

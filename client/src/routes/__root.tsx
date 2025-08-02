@@ -1,4 +1,4 @@
-import type { GameContext } from "@/hooks/useGameState";
+import type { GameContext } from "@client/hooks/useGameState";
 import { createRootRouteWithContext, Link, Outlet } from "@tanstack/react-router";
 // import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 
