@@ -1,5 +1,5 @@
-import { Label } from "../ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
+import { Label } from "../../ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../../ui/select";
 
 type ApiSelectProps = {
   value: string;
@@ -15,7 +15,8 @@ export function ApiSelect({ value, onChange }: ApiSelectProps) {
           <SelectValue placeholder="Select API"></SelectValue>
         </SelectTrigger>
         <SelectContent>
-          <SelectItem value="Museum">Museum</SelectItem>
+          <SelectItem value="museum">Museum</SelectItem>
+          <SelectItem value="picsum">Picsum</SelectItem>
         </SelectContent>
       </Select>
     </div>

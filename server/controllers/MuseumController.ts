@@ -3,6 +3,7 @@ import type { Context } from "hono";
 
 export class MuseumController {
   private museumService: MuseumService;
+
   constructor() {
     this.museumService = new MuseumService();
   }
